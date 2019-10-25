@@ -54,6 +54,10 @@ def fetch_create_account_token():
     return fetch_tokens("createaccount")["createaccounttoken"]
 
 
+def fetch_user_rights_token():
+    return fetch_tokens("userrights")["userrightstoken"]
+
+
 def login(option):
     username = option["username"]
     password = option["password"]
@@ -77,6 +81,40 @@ def login(option):
     print(data)
 
 
+def change_user_group_membership(option):
+    username = option["username"]
+
+    token = option["token"]
+
+    body = {
+        "action": "userrights",
+        "user": username,
+        "token": token,
+        "format": "json"
+    }
+
+    if "add_groups" in option:
+        body["add"] = option["add_groups"]
+
+    if "remove_groups" in option:
+        body["remove"] = option["remove_groups"]
+
+    response = session.post(url=API_ENDPOINT, data=body)
+
+    data = response.json()
+
+    print(data)
+
+
+def add_user_to_groups(option):
+    username = option["username"]
+    groups = option["groups"]
+
+    token = option["token"]
+
+    change_user_group_membership({"username": username, "add_groups": groups, "token": token})
+
+
 def create_account(option):
     username = option["username"]
     password = option["password"]
@@ -87,13 +125,13 @@ def create_account(option):
 
     body = {
         "action": "createaccount",
-        "createtoken": token,
         "username": username,
         "password": password,
         "retype": password,
         "email": email,
         "realname": "",
         "createreturnurl": return_uri,
+        "createtoken": token,
         "format": "json"
     }
 
@@ -128,6 +166,52 @@ def create_accounts(option):
         })
 
 
+def create_bot_account(option):
+    username = option["username"]
+    password = option["password"]
+    email = option["email"]
+
+    create_account_token = option["create_account_token"]
+    user_rights_token = option["user_rights_token"]
+    return_uri = option["return_uri"]
+
+    create_account({
+        "username": username,
+        "password": password,
+        "email": email,
+        "token": create_account_token,
+        "return_uri": return_uri
+    })
+
+    add_user_to_groups({
+        "username": username,
+        "groups": "bot",
+        "token": user_rights_token
+    })
+
+
+def create_bot_accounts(option):
+    accounts = option["accounts"]
+
+    create_account_token = option["create_account_token"]
+    user_rights_token = option["user_rights_token"]
+    return_uri = option["return_uri"]
+
+    for account in accounts:
+        username = account["username"]
+        password = account["password"]
+        email = account["email"]
+
+        create_bot_account({
+            "username": username,
+            "password": password,
+            "email": email,
+            "create_account_token": create_account_token,
+            "user_rights_token": user_rights_token,
+            "return_uri": return_uri
+        })
+
+
 accounts = [
     {"username": "User1", "password": "password", "email": "user1@domain.tld"},
     {"username": "User2", "password": "password", "email": "user2@domain.tld"},
@@ -154,6 +238,11 @@ accounts = [
     {"username": "User11h", "password": "password", "email": "user11@domain.tld"}
 ]
 
+bot_accounts = [
+    {"username": "FirstBot", "password": "password", "email": "firstbot@domain.tld"},
+    {"username": "SecondBot", "password": "password", "email": "secondbot@domain.tld"}
+]
+
 print("Fetching login token...")
 login_token = fetch_login_token()
 print()
@@ -168,3 +257,11 @@ print()
 
 print("Creating accounts...")
 create_accounts({"accounts": accounts, "token": create_account_token, "return_uri": WIKI_URI})
+print()
+
+print("Fetching user rights token...")
+user_rights_token = fetch_user_rights_token()
+print()
+
+print("Creating bot accounts...")
+create_bot_accounts({"accounts": bot_accounts, "create_account_token": create_account_token, "user_rights_token": user_rights_token, "return_uri": WIKI_URI})

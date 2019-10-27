@@ -1,2 +1,2 @@
-# Wiki scripts
-Basic scripts for a wiki.
+# MediaWiki scripts
+Basic scripts for a MediaWiki wiki.

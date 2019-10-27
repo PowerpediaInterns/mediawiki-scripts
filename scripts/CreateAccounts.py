@@ -212,56 +212,62 @@ def create_bot_accounts(option):
         })
 
 
-accounts = [
-    {"username": "User1", "password": "password", "email": "user1@domain.tld"},
-    {"username": "User2", "password": "password", "email": "user2@domain.tld"},
-    {"username": "User3", "password": "password", "email": "user3@domain.tld"},
-    {"username": "User4", "password": "password", "email": "user4@domain.tld"},
-    {"username": "User5", "password": "password", "email": "user5@domain.tld"},
-    {"username": "User6", "password": "password", "email": "user6@domain.tld"},
-    {"username": "User7", "password": "password", "email": "user7@domain.tld"},
-    {"username": "User8", "password": "password", "email": "user8@domain.tld"},
-    {"username": "User9", "password": "password", "email": "user9@domain.tld"},
-    {"username": "User10", "password": "password", "email": "user10@domain.tld"},
-    {"username": "User10a", "password": "password", "email": "user10@domain.tld"}
-]
+def main(*args):
+    accounts = [
+        {"username": "User1", "password": "password", "email": "user1@domain.tld"},
+        {"username": "User2", "password": "password", "email": "user2@domain.tld"},
+        {"username": "User3", "password": "password", "email": "user3@domain.tld"},
+        {"username": "User4", "password": "password", "email": "user4@domain.tld"},
+        {"username": "User5", "password": "password", "email": "user5@domain.tld"},
+        {"username": "User6", "password": "password", "email": "user6@domain.tld"},
+        {"username": "User7", "password": "password", "email": "user7@domain.tld"},
+        {"username": "User8", "password": "password", "email": "user8@domain.tld"},
+        {"username": "User9", "password": "password", "email": "user9@domain.tld"},
+        {"username": "User10", "password": "password", "email": "user10@domain.tld"},
+        {"username": "User10a", "password": "password", "email": "user10@domain.tld"}
+    ]
 
-accounts = [
-    {"username": "User11", "password": "password", "email": "user11@domain.tld"},
-    {"username": "User11a", "password": "password", "email": "user11@domain.tld"},
-    {"username": "User11b", "password": "password", "email": "user11@domain.tld"},
-    {"username": "User11c", "password": "password", "email": "user11@domain.tld"},
-    {"username": "User11d", "password": "password", "email": "user11@domain.tld"},
-    {"username": "User11e", "password": "password", "email": "user11@domain.tld"},
-    {"username": "User11f", "password": "password", "email": "user11@domain.tld"},
-    {"username": "User11g", "password": "password", "email": "user11@domain.tld"},
-    {"username": "User11h", "password": "password", "email": "user11@domain.tld"}
-]
+    accounts = [
+        {"username": "User11", "password": "password", "email": "user11@domain.tld"},
+        {"username": "User11a", "password": "password", "email": "user11@domain.tld"},
+        {"username": "User11b", "password": "password", "email": "user11@domain.tld"},
+        {"username": "User11c", "password": "password", "email": "user11@domain.tld"},
+        {"username": "User11d", "password": "password", "email": "user11@domain.tld"},
+        {"username": "User11e", "password": "password", "email": "user11@domain.tld"},
+        {"username": "User11f", "password": "password", "email": "user11@domain.tld"},
+        {"username": "User11g", "password": "password", "email": "user11@domain.tld"},
+        {"username": "User11h", "password": "password", "email": "user11@domain.tld"}
+    ]
 
-bot_accounts = [
-    {"username": "FirstBot", "password": "password", "email": "firstbot@domain.tld"},
-    {"username": "SecondBot", "password": "password", "email": "secondbot@domain.tld"}
-]
+    bot_accounts = [
+        {"username": "FirstBot", "password": "password", "email": "firstbot@domain.tld"},
+        {"username": "SecondBot", "password": "password", "email": "secondbot@domain.tld"},
+        {"username": "TestBot", "password": "password", "email": "testbot@domain.tld"}
+    ]
 
-print("Fetching login token...")
-login_token = fetch_login_token()
-print()
+    print("Fetching login token...")
+    login_token = fetch_login_token()
+    print()
 
-print("Logging in...")
-login({"username": USERNAME, "password": PASSWORD, "token": login_token, "return_uri": WIKI_URI})
-print()
+    print("Logging in...")
+    login({"username": USERNAME, "password": PASSWORD, "token": login_token, "return_uri": WIKI_URI})
+    print()
 
-print("Fetching create account token...")
-create_account_token = fetch_create_account_token()
-print()
+    print("Fetching create account token...")
+    create_account_token = fetch_create_account_token()
+    print()
 
-print("Creating accounts...")
-create_accounts({"accounts": accounts, "token": create_account_token, "return_uri": WIKI_URI})
-print()
+    print("Creating accounts...")
+    create_accounts({"accounts": accounts, "token": create_account_token, "return_uri": WIKI_URI})
+    print()
 
-print("Fetching user rights token...")
-user_rights_token = fetch_user_rights_token()
-print()
+    print("Fetching user rights token...")
+    user_rights_token = fetch_user_rights_token()
+    print()
 
-print("Creating bot accounts...")
-create_bot_accounts({"accounts": bot_accounts, "create_account_token": create_account_token, "user_rights_token": user_rights_token, "return_uri": WIKI_URI})
+    print("Creating bot accounts...")
+    create_bot_accounts({"accounts": bot_accounts, "create_account_token": create_account_token, "user_rights_token": user_rights_token, "return_uri": WIKI_URI})
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,11 @@
+certifi==2019.11.28
+chardet==3.0.4
+et-xmlfile==1.0.1
+idna==2.8
+jdcal==1.4.1
+mysql-connector-python==8.0.18
+openpyxl==3.0.2
+protobuf==3.11.1
+requests==2.22.0
+six==1.13.0
+urllib3==1.25.7

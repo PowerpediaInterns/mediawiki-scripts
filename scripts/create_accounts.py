@@ -242,7 +242,8 @@ def main(*args):
     bot_accounts = [
         {"username": "FirstBot", "password": "password", "email": "firstbot@domain.tld"},
         {"username": "SecondBot", "password": "password", "email": "secondbot@domain.tld"},
-        {"username": "TestBot", "password": "password", "email": "testbot@domain.tld"}
+        {"username": "TestBot", "password": "password", "email": "testbot@domain.tld"},
+        {"username": "InternetArchiveBot", "password": "password", "email": "InternetArchiveBot@domain.tld"}
     ]
 
     print("Fetching login token...")

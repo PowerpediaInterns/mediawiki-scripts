@@ -4,6 +4,7 @@ This script fetches the users from the wiki database or from the CSV file genera
 
 ## Requirements
 
+* [Python 3+](https://www.python.org/downloads/)
 * Database read access or [UserExport extension](https://github.com/PowerpediaInterns/mediawiki-extensions-UserExport) installed.
 
 ## Installation

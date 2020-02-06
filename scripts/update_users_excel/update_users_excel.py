@@ -137,7 +137,8 @@ class UserModel:
         """
 
         date = datetime.datetime.strptime(timestamp, "%Y%m%d%H%M%S")
-        return date.isoformat()
+        # return date.isoformat()
+        return date
 
     @classmethod
     def format_user_date(cls, user, key):
@@ -536,6 +537,8 @@ class WorkbookController:
         f"{XL_FOLDER_NAME}/{STYLES_XML_FILE_NAME}"
     ]
 
+    ISO_8601_NUMBER_FORMAT = "yyyy-mm-ddThh:MM:ss"
+
     was_theme_updated = False
 
     def __init__(self):
@@ -618,8 +621,17 @@ class WorkbookController:
             for c, field in enumerate(fields, start=1):
                 value = row[field]
                 cell = sheet.cell(row=r, column=c)
-                cell.number_format = FORMAT_TEXT
-                cell.value = value
+
+                cell_number_format = FORMAT_TEXT
+                cell_value = value
+                cell_data_type = "s"
+                if isinstance(value, datetime.datetime):
+                    cell_number_format = cls.ISO_8601_NUMBER_FORMAT
+                    cell_data_type = "d"
+
+                cell.number_format = cell_number_format
+                cell.value = cell_value
+                cell.data_type = cell_data_type
 
         total_row = {
             "user_name": "Total",

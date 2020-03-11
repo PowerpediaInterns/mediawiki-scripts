@@ -123,6 +123,14 @@ def upload_files(option):
         })
 
 
+def create_pdf(text):
+    return f"""%PDF-1.0
+9 0 obj<<>>stream
+BT/ 9 Tf({text})' ET
+endstream
+endobj 4 0 obj<</Parent 5 0 R/Contents 9 0 R>>endobj 5 0 obj<</Kids[4 0 R]/Count 1/MediaBox[0 0 99 9]>>endobj 3 0 obj<</Pages 5 0 R>>endobj trailer<</Root 3 0 R>>"""
+
+
 def main(*args):
     minimal_pdf = """%PDF-1.0
 1 0 obj<</Pages 2 0 R>>endobj 2 0 obj<</Kids[3 0 R]/Count 1>>endobj 3 0 obj<</MediaBox[0 0 3 3]>>endobj
@@ -132,10 +140,13 @@ trailer<</Root 1 0 R>>"""
 
     files = [
         {"name": "Minimal PDF.pdf", "data": minimal_pdf},
-        {"name": "Minimal PDF 1.pdf", "data": minimal_pdf},
         {"name": "Minimal GIF.gif", "data": minimal_gif},
         {"name": "Minimal DOCX.docx", "data": minimal_docx}
     ]
+
+    files.extend(
+        {"name": f"Minimal PDF {i}.pdf", "data": create_pdf(i)} for i in range(1, 501)
+    )
 
     print("Fetching login token...")
     login_token = fetch_login_token()

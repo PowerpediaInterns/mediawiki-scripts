@@ -797,16 +797,16 @@ class MainController:
         print(f"Fetching users from {config_type.value}...", end="")
         users = (self.fetch_users_from_export() if config_type == ConfigType.WIKI else self.fetch_users_from_database())
         self.users = users
-        print(" Dome.")
+        print(" Done.")
         # print(users)
         print()
 
         print("Creating users workbook...", end="")
         self.create_users_workbook()
-        print(" Dome.")
+        print(" Done.")
         print("Writing users workbook...", end="")
         self.write_users_workbook()
-        print(" Dome.")
+        print(" Done.")
 
         print("Uploading users workbook...")
         self.upload_users_workbook()
